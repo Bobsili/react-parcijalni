@@ -4,6 +4,7 @@ import { Button } from "./Button";
 import axios from "axios";
 
 
+
 export function Form({ label }) {
   // const [username, setUsername] = useState('')
   const [formState, setFormState] = useState('');
@@ -13,26 +14,28 @@ export function Form({ label }) {
 
 
   useEffect(() => {
-    fetch(`https://api.github.com/users/${formState}`)
-      .then(res => res.json())
-      .then((data) => {
-        setData(data)
-      })
-      .catch(() => {
-        setError(new Error('Something went wrong'))
-      })
-  }, []);
+    (function () {
+      return fetch(`https://api.github.com/users/${formState}`)
+        .then(res => res.json())
+        .then((data) => {
+          setData(data)
+        })
+        .catch(() => {
+          setError(new Error('Something went wrong'))
+        })
+    }, []);
 
-  if (error !== null) {
-    return <div>Something went wrong!...</div>
-  }
+    if (error !== null) {
+      return <div>Something went wrong!...</div>
+    }
 
-  if (data === null) {
-    return <div>Loading...</div>
-  }
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(`Form submitted, ${formState}`);
+    if (data === null) {
+      return <div>Loading...</div>
+    }
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      console.log(`Form submitted, ${formState}`);
+    }
   }
 
   // const onClick = (e) => {
@@ -58,7 +61,7 @@ export function Form({ label }) {
   console.log(repos.data);
 
   const listRepos = repos.length !== 0 ? (repos.data.map((item) =>
-    <li>{item.name}</li>)) : (<li>No repos</li>)
+    <li key={item.id}>{item.name}</li>)) : (<li>No repos</li>)
 
   return (
     <>
