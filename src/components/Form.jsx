@@ -1,5 +1,6 @@
 import "./Form.css"
 import React, { useState } from 'react';
+import { Button } from "./Button"
 
 
 
@@ -21,8 +22,9 @@ export function Form({ label }) {
     setFormState(e.target.value)
   }
 
-  const handleClick = (e) => {
-    console.log('search...');
+  const handleClick = () => {
+    console.log(formState);
+    return fetch("")
   }
 
   return (
@@ -31,7 +33,7 @@ export function Form({ label }) {
       <form onSubmit={handleSubmit} >
         <div className="label">{label}</div>
         <input onChange={handleChange} value={formState} placeholder="Search..."></input>
-        <button onClick={handleClick} type='submit'>GO!</button>
+        <Button onClick={handleClick} />
       </form>
     </>
   );
