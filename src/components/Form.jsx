@@ -1,13 +1,36 @@
-import "./Form.css"
-import React, { useState } from 'react';
-import { Button } from "./Button"
-
+import "./Form.css";
+import React, { useState, useEffect } from 'react';
+import { Button } from "./Button";
+import axios from "axios";
 
 
 export function Form({ label }) {
-  const [username, setUsername] = useState('')
+  // const [username, setUsername] = useState('')
   const [formState, setFormState] = useState('');
+  const [data, setData] = useState(null)
+  const [error, setError] = useState(null)
+  const [repos, setRepos] = useState([])
 
+
+  useEffect(() => {
+    fetch(`https://api.github.com/users/${formState}/repos`)
+      .then(res => res.json())
+      .then((data) => {
+        setData(data)
+        console.log(data);
+      })
+      .catch(() => {
+        setError(new Error('Something went wrong'))
+      })
+  }, []);
+
+  if (error !== null) {
+    return <div>Something went wrong!...</div>
+  }
+
+  if (data === null) {
+    return <div>Loading...</div>
+  }
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(`Form submitted, ${formState}`);
@@ -22,10 +45,20 @@ export function Form({ label }) {
     setFormState(e.target.value)
   }
 
-  const handleClick = () => {
+  const handleClick = async () => {
     console.log(formState);
-    return fetch("")
+
+    try {
+      const result = await axios(`https://api.github.com/users/${formState}/repos`);
+      setRepos(result)
+    } catch (err) {
+      console.log(err);
+    }
   }
+  console.log(repos.data);
+
+  const listRepos = repos.length !== 0 ? repos.data.map((item) =>
+    <li>{item.name}</li>) : <li>No repos</li>
 
   return (
     <>
@@ -35,8 +68,14 @@ export function Form({ label }) {
         <input onChange={handleChange} value={formState} placeholder="Search..."></input>
         <Button onClick={handleClick} />
       </form>
+      <figure>
+        <h3>{data.name}</h3>
+        <img src={data.avatar_url} alt={data.bio}></img>
+        <figcaption>{data.login}</figcaption>
+      </figure>
+      <ul>
+        {listRepos}
+      </ul>
     </>
   );
-
 }
-

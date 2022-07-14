@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 // function getPhoto() {
-//   return fetch("https://api.github.com/users/${username}")
+//   return fetch(`https://api.github.com/users/${username}`)
 //     .then((response) => {
 //       return response.json()
 //     })
@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 export function GitHubApi() {
   const [data, setData] = useState(null)
   const [error, setError] = useState(null)
+  const [repos, setRepos] = useState([])
 
   // const [name, setName] = useState('')
   // const [location, setLocation] = useState('')
