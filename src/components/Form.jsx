@@ -13,11 +13,10 @@ export function Form({ label }) {
 
 
   useEffect(() => {
-    fetch(`https://api.github.com/users/${formState}/repos`)
+    fetch(`https://api.github.com/users/${formState}`)
       .then(res => res.json())
       .then((data) => {
         setData(data)
-        console.log(data);
       })
       .catch(() => {
         setError(new Error('Something went wrong'))
@@ -55,11 +54,11 @@ export function Form({ label }) {
       console.log(err);
     }
   }
+  console.log(data);
   console.log(repos.data);
 
   const listRepos = repos.length !== 0 ? (repos.data.map((item) =>
     <li>{item.name}</li>)) : (<li>No repos</li>)
-
 
   return (
     <>
@@ -70,9 +69,10 @@ export function Form({ label }) {
         <Button onClick={handleClick} />
       </form>
       <figure>
-        <h3>{data.name}</h3>
+        <h2>{data.name}</h2>
         <img src={data.avatar_url} alt={data.bio}></img>
-        <figcaption>{data.login}</figcaption>
+        <figcaption>{data.bio}</figcaption>
+        <h3>Repositories:</h3>
       </figure>
       <ul>
         {listRepos}
