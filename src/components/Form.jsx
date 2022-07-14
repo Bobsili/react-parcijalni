@@ -1,3 +1,4 @@
+import "./Form.css"
 import React, { useState } from 'react';
 
 
@@ -16,15 +17,23 @@ export function Form({ label }) {
   //   setUsername('');
   // }
 
+  const handleChange = (e) => {
+    setFormState(e.target.value)
+  }
+
+  const handleClick = (e) => {
+    console.log('search...');
+  }
+
   return (
-    <div>
+    <>
       <h1>GitHub repos:</h1>
       <form onSubmit={handleSubmit} >
         <div className="label">{label}</div>
-        <input onChange={(e) => setFormState(e.target.value)} value={formState} placeholder="Facebook..."></input>
-        <button type='submit'>GO!</button>
+        <input onChange={handleChange} value={formState} placeholder="Search..."></input>
+        <button onClick={handleClick} type='submit'>GO!</button>
       </form>
-    </div>
+    </>
   );
 
 }

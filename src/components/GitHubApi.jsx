@@ -44,13 +44,16 @@ export function GitHubApi() {
   // }
 
   return (
-    <div>
+    <>
       <figure>
         <h3>{data.name}</h3>
         <img src={data.avatar_url} alt={data.bio}></img>
         <figcaption>{data.login}</figcaption>
-
       </figure>
-    </div>
+
+      <ul>
+        <li>Repo one</li>
+      </ul>
+    </>
   );
 }
