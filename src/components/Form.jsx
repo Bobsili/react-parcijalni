@@ -57,8 +57,9 @@ export function Form({ label }) {
   }
   console.log(repos.data);
 
-  const listRepos = repos.length !== 0 ? repos.data.map((item) =>
-    <li>{item.name}</li>) : <li>No repos</li>
+  const listRepos = repos.length !== 0 ? (repos.data.map((item) =>
+    <li>{item.name}</li>)) : (<li>No repos</li>)
+
 
   return (
     <>
